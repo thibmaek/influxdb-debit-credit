@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "csvtojson": "*",
+    "dotenv": "*",
+    "json2csv": "*"
+  }
+}

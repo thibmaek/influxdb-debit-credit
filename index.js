@@ -8,6 +8,7 @@ const CSV_FILE = 'debit_credit.csv';
 const CSV_FILE_MAPPED = 'debit_credit_mapped.csv';
 const JSON_FILE = 'debit_credit.json'
 const PYTHON_SCRIPT = 'csv-to-influxdb.py';
+const TIMEFORMAT_DASHES = "%d-%m-%Y, %H:%M"
 const TIMEFORMAT = "%d %B %Y, %H:%M"; // e.g: (30 March 2013, 07:06) http://strftime.org/
 
 (async () => {
@@ -52,7 +53,7 @@ const TIMEFORMAT = "%d %B %Y, %H:%M"; // e.g: (30 March 2013, 07:06) http://strf
         console.log(`Sending ${CSV_FILE_MAPPED} to ${process.env.INFLUXDB_USER}@${host} in database: ${process.env.INFLUXDB_NAME}`);
 
         exec(
-          `python ${PYTHON_SCRIPT} -i ${CSV_FILE_MAPPED} -s ${host} -u "${process.env.INFLUXDB_USER}" -p "${process.env.INFLUXDB_PASS}" --dbname ${process.env.INFLUXDB_NAME} --timeformat "${TIMEFORMAT}" --tagcolumns description,category,payee,tag,account,transfer_account,type`,
+          `python ${PYTHON_SCRIPT} -i ${CSV_FILE_MAPPED} -s ${host} -u "${process.env.INFLUXDB_USER}" -p "${process.env.INFLUXDB_PASS}" --dbname ${process.env.INFLUXDB_NAME} --timeformat "${TIMEFORMAT_DASHES}" --tagcolumns description,category,payee,tag,account,transfer_account,type`,
           (insertErr, out, e) => {
             if (insertErr) throw new Error(insertErr);
             if (e) throw new Error(e);
